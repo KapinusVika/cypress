@@ -1,6 +1,6 @@
-import popularItemPage from "../Pages/popularItemPage"
+
 import searchResultPage from "../Pages/searchResultPage"
-import popularPrimeryComponent from "../Components/popularPrimeryComponent"
+import popularItemPage from "./popularItemPage"
 
 class homePage {
 
@@ -10,21 +10,17 @@ class homePage {
     emailInput = 'input[class = "sc-htpNat hIeGZi"]'
     passInput = 'input[name="password"]'
     login = 'div[style="text-align: center;"] > div'
-    logo ='div.logotype'
+    logo ='.logotypeImg'
     userEmail = '.userToolsSubtitle'
     searchFrame = '[id^=j-search]'
     searchButton = 'button[name="sa"]'
     navigateMenuHeader = '.navigationItem'
-    popularPrimeryComponent ='.b-foreign_goods > li'
+    popularItems = "span[class = 'foreign_goods__name']>a"
 
 
-     isOpened (){
-        cy.get(this.logo).should('be.visible')
+    isOpened (){
+        return cy.get(this.logo).should('be.visible').its("length")
         
-    }
-
-    getComponents(){
-        return popularPrimeryComponent
     }
 
     authorization (email, pass){
@@ -36,7 +32,7 @@ class homePage {
         return new homePage
     }
 
-    getUserEmail(expected) {
+    checkUserEmail(expected) {
         cy.get(this.accountButton).click()
         cy.get(this.userEmail).first().then(($fav) => {
             const favEmail = $fav.text()
@@ -56,18 +52,19 @@ class homePage {
     }
 
     openPopularItemPage(itemName) {
+        // cy.get(this.popularItems).then($el => $el.get(index)).click()
+        cy.get(`span[class = 'foreign_goods__name']>a[title = "${itemName}" ]`).click()
+        return new popularItemPage
+    } 
 
-    
+    // getItemByIndex(index){
+    //     let namem = cy.get(this.popularItems).then($el => $el[index]).invoke('attr', 'title')
+    //     return namem
 
-        // cy.get(this.popularItem).first().then(($fav) => {
-        //     const favItemName = $fav.text()
-        //     expect(favItemName).to.eq(itemName)
-        // }).click()
+    // }
 
-        // cy.get(this.popularItem).first().filter(el => el.toString).contains(itemName).click()
-        // return new popularItemPage
-
-        cy.get(this.popularPrimeryComponent).contains(itemName).click()
-    }
+    // getCountItems(){
+    //     return cy.get(this.popularItems).length
+    // }
 
 } export default homePage

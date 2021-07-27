@@ -9,10 +9,17 @@ class searchResultPage {
         
     }
 
-    getItemTitle(word){
-        cy.get(this.itemName).first().then(($fav) => {
+    checkItemTitle(word){
+        cy.get(this.itemName).each(($fav) => {
             const itemTitle = $fav.text()
             expect(itemTitle).to.contain(word)
+        })
+    }
+
+    checkProductName(name){
+        cy.get(this.resultHeader).then(($fav) => {
+            const productName = $fav.text()
+            expect(productName).to.eq(name)
         })
     }
 }

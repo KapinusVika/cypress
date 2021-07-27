@@ -1,4 +1,4 @@
-import basketPage from "./BasketPage"
+import basketPage from "../Pages/BasketPage"
 
 class popularItemPage{
 
@@ -18,10 +18,16 @@ class popularItemPage{
         return new basketPage
     }
 
-    getItemName (){
-        return cy.get(itemName).first().then(($fav) => {
-            const itemName = $fav.text()
+    checkItemName (expectedName){
+        cy.get(this.itemName).first().then(($fav) => {
+            const actualItemName = $fav.text()
+            expect(actualItemName).to.eq(expectedName)
         })
     }
 
+    getItemName(){
+        let nnn = cy.get(this.itemName).then($title => $title.text())
+        return nnn
+    }
+ 
 } export default popularItemPage

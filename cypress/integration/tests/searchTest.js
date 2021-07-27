@@ -13,7 +13,6 @@ describe('SearchTest', () => {
         homePage.isOpened()
         homePage.searchItem(word)
         resultPage.isOpened()
-        resultPage.getItemTitle(word)
-        
+        resultPage.checkItemTitle(word)
     })
 })
